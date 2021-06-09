@@ -1,0 +1,33 @@
+package com.web_course.chat_app.user;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(path="api/v1/users")
+public class UserController {
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/get/{id}")
+    public User getUsers(@PathVariable("id") Long id){
+//        return new User(1L, "John", "Password");
+        return userService.getUser(id);
+    }
+
+    @PostMapping("/post")
+    public void addNewStudent(@RequestBody User user){
+        userService.addNewUser(user);
+    }
+
+    @DeleteMapping(path = "delete/{userUid}")
+    public void deleteUser(@PathVariable("userUid") Long id){
+        userService.deleteUser(id);
+    }
+}

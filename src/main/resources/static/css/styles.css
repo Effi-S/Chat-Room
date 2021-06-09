@@ -1,0 +1,40 @@
+body,html {
+    background-color: rgba(50, 48, 120, 1) !important;
+}
+.send-button {
+    background-color:rgba(60, 30, 120, 1) !important;
+    box-shadow: 0 0 1px rgba(50, 48, 120, 1);
+    color: white;
+    float: right;
+    -webkit-transition: all 0.5s ease-in-out;
+
+}
+.search-button {
+    background-color: rgba(34, 29, 47, 1) !important;
+    box-shadow: 0 0 1px rgba(50, 48, 120, 1);
+    padding-right: 10px;
+    margin-right: 20px;
+    color: white;
+    float: left;
+}
+.card {
+    height: 500px;
+    border-radius: 20px !important;
+    background-color: rgba(1,0,0,0.4) !important;
+}
+
+.card-body {
+	background-color: rgba(255, 255, 255, 0.74) !important;
+    overflow-y: scroll;
+}
+
+.card-header {
+	color: white !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-bottom: 0 !important;
+}
+
+.card-footer {
+    border-radius: 0 0 10px 10px !important;
+    border-top: 0 !important;
+}
