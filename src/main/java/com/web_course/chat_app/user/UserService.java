@@ -13,9 +13,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUser(Long id) {
-        User userSearch =
-                userRepository.findUserById(id);
+    public User getUser(String id) {
+        User userSearch = userRepository.findUserById(id);
         if(userSearch == null){
             throw new IllegalStateException("User Does not exists");
         }

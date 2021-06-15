@@ -14,8 +14,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/get/{id}")
-    public User getUsers(@PathVariable("id") Long id){
+    @GetMapping("/get/{sess}")
+    public User getUsers(@PathVariable("sess") String id){
 //        return new User(1L, "John", "Password");
         return userService.getUser(id);
     }
