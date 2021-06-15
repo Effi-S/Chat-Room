@@ -15,7 +15,7 @@ import java.util.Objects;
 public class WebSocketEventListener {
 
 
-    private SimpMessageSendingOperations  sendingOperations;
+    private final SimpMessageSendingOperations  sendingOperations;
 
     @Autowired
     WebSocketEventListener(SimpMessageSendingOperations  sendingOperations){
@@ -24,14 +24,18 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleConnect(final SessionConnectedEvent event){
-        System.out.println("New Connection");
+        System.out.println("New Connection..");
     }
 
     @EventListener
     public void handleDisconnect(SessionDisconnectEvent event){
+
         final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) Objects.requireNonNull(headerAccessor.getSessionAttributes()).get("username");
-
-        final Message massage = new Message();
+        final Message message =  new Message(username + " disconeccted  connected.",
+                                            "chat-app");
+        System.out.println(".. Disconnect event .. ");
+         sendingOperations.convertAndSend("topic/messages", message);
     }
+
 }

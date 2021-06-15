@@ -12,8 +12,8 @@ public class UserConfig {
     @Bean
     CommandLineRunner commandRunner(UserRepository repository ){
         return args -> {
-            User chatapp = new User(1L, "chat-app", "1234");
-            User john = new User(2L, "john", "4567");
+            User chatapp = new User("chat-app", "1234");
+            User john = new User("john", "4567");
             repository.saveAll(List.of(chatapp, john));
 
         };

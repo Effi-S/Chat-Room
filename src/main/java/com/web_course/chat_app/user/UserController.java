@@ -3,7 +3,6 @@ package com.web_course.chat_app.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(path="api/v1/users")
@@ -22,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/post")
-    public void addNewStudent(@RequestBody User user){
+    public void addNewUser(@RequestBody User user){
         userService.addNewUser(user);
     }
 

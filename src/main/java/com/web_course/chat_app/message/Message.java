@@ -1,6 +1,8 @@
 package com.web_course.chat_app.message;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Table
@@ -19,38 +21,30 @@ public class Message {
     private Long mid;
     private String message;
     private String username;
-    private Long uid;
 
 
-    public Message(Long mid, String message, Long uid, String username) {
+    public Message(String message, String username) {
 
-        this.mid = mid;
         this.message = message;
         this.username = username;
-        this.uid = uid;
+        this.mid = Instant.now().toEpochMilli();
     }
 
     public Message() {
 
     }
-    public Long getMid() {
-        return mid;
-    }
+
     public String getMessage() {
         return message;
     }
     public String getUsername() {
         return username;
     }
-    public Long getUid() {
-        return uid;
+    public Long getMid() {
+        return mid;
     }
-    public void setUid(Long uid) {
-        this.uid = uid;
-    }
-    public void setMid(Long mid) {
-        this.mid = mid;
-    }
+
+
     public void setUsername(String username) {
         this.username = username;
     }

@@ -25,6 +25,7 @@ public class MessageController {
     public void addMessage(@RequestBody Message message){
        messageService.addMessage(message);
     }
+
     @GetMapping("/find/sub_string/{sub}")
     public List<Message> findBySubString(@PathVariable("sub") String subString){
         return messageService.findAllMessagesWithSubString(subString);

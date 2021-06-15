@@ -12,19 +12,22 @@ import java.util.Objects;
 
 @Controller
 public class ChatController {
-    @MessageMapping("/chat.send")
-    @SendTo("topic/public")
+
+    @MessageMapping("/chat")
+    @SendTo("topic/messages")
     public Message sendMessage(@Payload final Message message){
+        System.out.println("Redirecting message: " + message.getMessage()
+                + " " +  message.getUsername());
         return message;
     }
+
     @MessageMapping("/chat.userEnter")
     @SendTo
     public Message userEnter(@Payload final User user,
                            SimpMessageHeaderAccessor headerAccessor ){
         Objects.requireNonNull(headerAccessor.getSessionAttributes()).put("username", user.getName());
-        return new Message(123L,
+        return new Message(
                 user.getName() + " connected.",
-                1L,
                 "chat-app");
     }
 }

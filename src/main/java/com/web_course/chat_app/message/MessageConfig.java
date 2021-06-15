@@ -10,11 +10,9 @@ import java.util.List;
 public class MessageConfig {
     @Bean
     CommandLineRunner commandLineRunner(MessageRepository repository){
-        return args -> repository.saveAll(List.of(new Message(123L,
+        return args -> repository.saveAll(List.of(new Message(
                                     "Welcome to the chat!",
-                                    1L,
                                     "chat-app")
-
                                 ));
     }
 }
