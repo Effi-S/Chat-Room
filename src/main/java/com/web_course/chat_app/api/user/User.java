@@ -1,4 +1,4 @@
-package com.web_course.chat_app.user;
+package com.web_course.chat_app.api.user;
 
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -32,6 +32,10 @@ public class User{
 
     }
 
+    private String loadSession(){
+        return RequestContextHolder.currentRequestAttributes().getSessionId();
+    }
+
     public String getSession() {
         return session;
     }
@@ -54,9 +58,7 @@ public class User{
         this.password = password;
     }
 
-    private String loadSession(){
-        return RequestContextHolder.currentRequestAttributes().getSessionId();
-    }
+
     public void setSession( String session) {
         this.session = session;
     }

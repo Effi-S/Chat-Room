@@ -10,12 +10,11 @@ const session_id = /SESS\w*ID=([^;]+)/i.test(document.cookie) ? RegExp.$1 : fals
 
 // Take the value in the ‘message-input’ text field and send it to the server with empty headers.
 function sendMessage(){
-
+    console.log("Sending Message.. ");
     const input = document.getElementById("message-input");
     const message = input.value;
-
     client.send('/app/chat', {}, JSON.stringify({message:  message}));
-
+    input.value = ""; // clearing input.
 }
 
 

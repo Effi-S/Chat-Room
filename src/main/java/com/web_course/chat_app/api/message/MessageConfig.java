@@ -1,4 +1,4 @@
-package com.web_course.chat_app.message;
+package com.web_course.chat_app.api.message;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

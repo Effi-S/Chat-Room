@@ -1,5 +1,5 @@
 package com.web_course.chat_app.web_socket;
-import com.web_course.chat_app.message.Message;
+import com.web_course.chat_app.api.message.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;

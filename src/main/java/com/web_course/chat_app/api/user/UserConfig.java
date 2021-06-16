@@ -1,9 +1,5 @@
-package com.web_course.chat_app.user;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
+package com.web_course.chat_app.api.user;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 @Configuration
 public class UserConfig {

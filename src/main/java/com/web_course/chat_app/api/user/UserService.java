@@ -1,4 +1,4 @@
-package com.web_course.chat_app.user;
+package com.web_course.chat_app.api.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

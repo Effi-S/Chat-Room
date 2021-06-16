@@ -1,4 +1,4 @@
-package com.web_course.chat_app.message;
+package com.web_course.chat_app.api.message;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

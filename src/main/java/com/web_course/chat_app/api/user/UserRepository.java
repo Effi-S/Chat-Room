@@ -1,4 +1,4 @@
-package com.web_course.chat_app.user;
+package com.web_course.chat_app.api.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
