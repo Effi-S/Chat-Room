@@ -9,11 +9,11 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stomp")
-                .setAllowedOrigins("http://localhost:8080")
-                .withSockJS();
+                .withSockJS(); // allow SockJS fallback option.
         WebSocketMessageBrokerConfigurer.super.registerStompEndpoints(registry);
     }
 

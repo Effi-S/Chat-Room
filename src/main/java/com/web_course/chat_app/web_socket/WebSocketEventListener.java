@@ -24,6 +24,7 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleConnect(final SessionConnectedEvent event){
+
         System.out.println("New Connection..");
     }
 

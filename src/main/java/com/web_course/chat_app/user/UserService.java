@@ -10,20 +10,21 @@ public class UserService {
 
     @Autowired
     public UserService(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
-    public User getUser(String id) {
-        User userSearch = userRepository.findUserById(id);
-        if(userSearch == null){
+    public User getUser(String session) {
+        User user = userRepository.findUserBySession(session);
+        if(user == null){
             throw new IllegalStateException("User Does not exists");
         }
-        return userSearch;
+        return user;
     }
 
     public void addNewUser(User user){
         User userSearch =
-                userRepository.findUserById(user.getId());
+                userRepository.findUserBySession(user.getSession());
 
         if(userSearch != null){
             throw new IllegalStateException("User already exists");

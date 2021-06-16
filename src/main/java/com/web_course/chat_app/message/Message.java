@@ -1,7 +1,6 @@
 package com.web_course.chat_app.message;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.Instant;
 
 @Entity

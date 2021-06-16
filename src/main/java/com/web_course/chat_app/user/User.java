@@ -6,50 +6,58 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class User {
+public class User{
+
     @Id
-    @SequenceGenerator(name="user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    @SequenceGenerator(
+           name = "user_sequence",
+           sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-    String id;
-    String name;
-    String password;
-    Boolean active;
+    private String session;
+    private String username;
+    private String password;
 
-    public User(String name, String password) {
-        setSession();
-        this.name = name;
+
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
-        active = true;
+        this.session = loadSession();
+    }
+    public User(){
+
     }
 
-    public void setSession(){
-        this.id = RequestContextHolder.currentRequestAttributes().getSessionId();
-    }
-    public User() {
+    public String getSession() {
+        return session;
     }
 
-    void setActivity(Boolean activity){
-        this.active = activity;
-    }
-    public User(User user) {
-       this.id = user.getId();
-       this.name = user.getName();
-       this.password = user.getPassword();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String loadSession(){
+        return RequestContextHolder.currentRequestAttributes().getSessionId();
+    }
+    public void setSession( String session) {
+        this.session = session;
     }
 }
