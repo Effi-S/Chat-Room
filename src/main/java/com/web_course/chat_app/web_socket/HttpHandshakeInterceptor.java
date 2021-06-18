@@ -8,14 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
-
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,12 +40,19 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
         Optional<User> userSearch = userService.getUserBySession(sessionId);
         if(userSearch.isEmpty()){
             System.out.println("userSearch is empty!");
-            throw new UserNotRegisteredException();
+//            throw new UserNotRegisteredException();
         } else if (!userSearch.get().isActive()){
             System.out.println("user inactive!");
             throw new UserInactiveException();
+        } else {
+            userSearch.get().setSession(sessionId);
+            userSearch.get().setActive(true);
         }
-        return true;
+            return true;
+    }
+
+    @Override
+    public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
     }
 
     private String getSessionID(ServerHttpRequest serverHttpRequest) {
@@ -57,24 +61,5 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
             return session.getId();
             }
         return null;
-    }
-
-    @Override
-    public void afterHandshake(org.springframework.http.server.ServerHttpRequest serverHttpRequest,
-                               org.springframework.http.server.ServerHttpResponse serverHttpResponse,
-                               WebSocketHandler webSocketHandler, Exception e) {
-        String sessionId = getSessionID(serverHttpRequest);
-        Optional<User> userSearch = userService.getUserBySession(sessionId);
-        assert userSearch.isPresent(): "Could not get user (Unexpected). ";
-
-        userSearch.get().setActive(true);
-        userSearch.get().setSession(sessionId);
-
-//        if (serverHttpRequest instanceof ServletServerHttpRequest servletRequest) {
-//            HttpSession session = servletRequest.getServletRequest().getSession();
-//            String sessionId = session.getId();
-//            System.out.println("SessionId: " + sessionId);
-//        }
-
     }
 }
