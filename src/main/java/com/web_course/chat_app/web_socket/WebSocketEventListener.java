@@ -2,6 +2,7 @@ package com.web_course.chat_app.web_socket;
 
 import com.web_course.chat_app.api.message.Message;
 import com.web_course.chat_app.api.user.UserService;
+import com.web_course.chat_app.exceptions.UserNotRegisteredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -35,7 +36,8 @@ public class WebSocketEventListener {
         String username = getUsernameFromEvent(event);
          final Message message =  new Message(username + " Connected.",
                 "chat-app");
-        sendingOperations.convertAndSend("topic/messages", message);
+        throw new UserNotRegisteredException();
+//        sendingOperations.convertAndSend("topic/messages", message);
     }
 
     private String getUsernameFromEvent(AbstractSubProtocolEvent event) {
