@@ -21,20 +21,22 @@ public class User{
     private String session;
     private String username;
     private String password;
+    private Boolean active;
 
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.session = loadSession();
+        this.session = null;
+        this.active = false;
     }
     public User(){
 
     }
 
-    private String loadSession(){
-        return RequestContextHolder.currentRequestAttributes().getSessionId();
-    }
+//    static public String getCurrentSession(){
+//        return RequestContextHolder.currentRequestAttributes().getSessionId();
+//    }
 
     public String getSession() {
         return session;
@@ -61,5 +63,13 @@ public class User{
 
     public void setSession( String session) {
         this.session = session;
+    }
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public void setActive(Boolean active){
+        this.active = active;
     }
 }

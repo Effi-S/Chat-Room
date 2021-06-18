@@ -1,0 +1,23 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta http-equiv="refresh" content="0; URL=client/chat-client.html">-->
+<!--    <title>Landing Page</title>-->
+<!--</head>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments :: head">
+    <title> head goes here </title>
+</head>
+<body>
+    <div class="row justify-content-center h-100"
+         layout:fragment="content">
+            <p>content Goes Here</p>
+    </div>
+    <div th:replace="fragments :: footer">
+        <p>footer Goes Here</p>
+    </div>
+</body>
+</html>

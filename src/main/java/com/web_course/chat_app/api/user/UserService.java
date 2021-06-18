@@ -3,6 +3,8 @@ package com.web_course.chat_app.api.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -14,24 +16,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUser(String session) {
-        User user = userRepository.findUserBySession(session);
-        if(user == null){
-            throw new IllegalStateException("User Does not exists");
-        }
+    public Optional<User> getUserBySession(String session) {
+        Optional<User> user = userRepository.findUserBySession(session);
+//        if(user.isEmpty()){
+//            new User("Johnny", "Walker");
+////            throw new IllegalStateException("User Does not exists");
+//        }
         return user;
     }
 
     public void addNewUser(User user){
-        User userSearch =
+        Optional<User> userSearch =
                 userRepository.findUserBySession(user.getSession());
 
-        if(userSearch != null){
+        if(userSearch.isPresent()){
             throw new IllegalStateException("User already exists");
         }
         userRepository.save(user);
     }
-
 
     public void deleteUser(Long id) {
         if(!userRepository.existsById(id)){

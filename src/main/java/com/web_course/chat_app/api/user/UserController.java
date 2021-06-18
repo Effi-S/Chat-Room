@@ -3,6 +3,8 @@ package com.web_course.chat_app.api.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping(path="api/v1/users")
@@ -15,13 +17,13 @@ public class UserController {
     }
 
     @GetMapping("/get/{sess}")
-    public User getUsers(@PathVariable("sess") String id){
+    public Optional<User> getUser(@PathVariable("sess") String id){
 //        return new User(1L, "John", "Password");
-        return userService.getUser(id);
+        return userService.getUserBySession(id);
     }
 
     @PostMapping("/post")
-    public void addNewUser(@RequestBody User user){
+    public void registerUser(@RequestBody User user){
         userService.addNewUser(user);
     }
 

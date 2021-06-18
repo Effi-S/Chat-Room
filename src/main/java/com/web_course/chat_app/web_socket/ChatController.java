@@ -4,6 +4,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -16,4 +17,10 @@ public class ChatController {
                 + " " +  message.getUsername());
         return message;
     }
+
+//    @RequestMapping("/login")
+//    public String userLogin(){
+//        System.out.println("Login Dummy");
+//        return "<h1>" + "Login Dummy"  + "</ h1>";
+//    }
 }

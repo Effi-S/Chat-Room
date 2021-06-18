@@ -1,11 +1,9 @@
 // Try to set up WebSocket connection with the handshake at "http://localhost:8080/stomp"
-const sock = new SockJS("http://localhost:8080/stomp");
-
+const sock = new SockJS("http://localhost:8080/stomp", null, { timeout: 15000});
 // Create a new StompClient object with the WebSocket endpoint
 const client = Stomp.over(sock);
 const session_id = /SESS\w*ID=([^;]+)/i.test(document.cookie) ? RegExp.$1 : false;
 // Start the STOMP communications, provide a callback for when the CONNECT frame arrives.
-
 
 
 // Take the value in the ‘message-input’ text field and send it to the server with empty headers.
