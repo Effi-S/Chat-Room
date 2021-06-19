@@ -1,11 +1,11 @@
 package com.web_course.chat_app.api.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
 
 @Repository
 public interface UserRepository
@@ -17,7 +17,7 @@ public interface UserRepository
     @Override
     <S extends User> S save(S s);
 
-    Optional<User> findUserBySession(String session);
-
+    @Query("SELECT u from User u WHERE u.username = ?1")
+    Optional<User> findUser(String username);
 
 }

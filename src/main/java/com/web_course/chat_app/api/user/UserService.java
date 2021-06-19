@@ -1,5 +1,7 @@
 package com.web_course.chat_app.api.user;
 
+import com.web_course.chat_app.exceptions.UserAlreadyRegisteredException;
+import com.web_course.chat_app.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,30 +18,26 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUserBySession(String session) {
-        Optional<User> user = userRepository.findUserBySession(session);
-//        if(user.isEmpty()){
-//            new User("Johnny", "Walker");
-////            throw new IllegalStateException("User Does not exists");
-//        }
-        return user;
+    public Optional<User> getUser(String username) {
+        return userRepository.findUser(username);
     }
 
     public void addNewUser(User user){
         Optional<User> userSearch =
-                userRepository.findUserBySession(user.getSession());
+                userRepository.findUser(user.getUsername());
 
         if(userSearch.isPresent()){
-            throw new IllegalStateException("User already exists");
+            throw new UserAlreadyRegisteredException("User already exists");
         }
         userRepository.save(user);
     }
 
-    public void deleteUser(Long id) {
-        if(!userRepository.existsById(id)){
-            throw new IllegalStateException("User with ID: " + id + "Does not exist");
+    public void deleteUser(String username) {
+        Optional<User> user = userRepository.findUser(username);
+        if(user.isEmpty()){
+            throw new UserNotExistException("User: " + username + " Does not exist");
         }
-        userRepository.deleteById(id);
+        userRepository.deleteById(user.get().getId());
 
     }
 }

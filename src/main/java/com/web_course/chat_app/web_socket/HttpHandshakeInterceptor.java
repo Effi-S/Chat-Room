@@ -2,8 +2,8 @@ package com.web_course.chat_app.web_socket;
 
 import com.web_course.chat_app.api.user.User;
 import com.web_course.chat_app.api.user.UserService;
-import com.web_course.chat_app.exceptions.UserInactiveException;
-import com.web_course.chat_app.exceptions.UserNotRegisteredException;
+import com.web_course.chat_app.exceptions.UserNotExistException;
+import com.web_course.chat_app.exceptions.UserAlreadyRegisteredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -32,22 +32,22 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
                                    org.springframework.http.server.ServerHttpResponse serverHttpResponse,
                                    WebSocketHandler webSocketHandler, Map<String, Object> attributes) {
 
-        String sessionId = getSessionID(serverHttpRequest);
-        if (sessionId != null){
-            attributes.put("sessionId", sessionId);
-            System.out.println("SessionId: " + sessionId);
-        }
-        Optional<User> userSearch = userService.getUserBySession(sessionId);
-        if(userSearch.isEmpty()){
-            System.out.println("userSearch is empty!");
-//            throw new UserNotRegisteredException();
-        } else if (!userSearch.get().isActive()){
-            System.out.println("user inactive!");
-            throw new UserInactiveException();
-        } else {
-            userSearch.get().setSession(sessionId);
-            userSearch.get().setActive(true);
-        }
+//        String sessionId = getSessionID(serverHttpRequest);
+//        if (sessionId != null){
+//            attributes.put("sessionId", sessionId);
+//            System.out.println("SessionId: " + sessionId);
+//        }
+//        Optional<User> userSearch = userService.getUser(sessionId);
+//        if(userSearch.isEmpty()){
+//            System.out.println("userSearch is empty!");
+//            throw new UserAlreadyRegisteredException();
+//        } else if (!userSearch.get().isActive()){
+//            System.out.println("user inactive!");
+//            throw new UserNotExistException();
+//        } else {
+////            userSearch.get().setSession(sessionId);
+//            userSearch.get().startActivity();
+//        }
             return true;
     }
 

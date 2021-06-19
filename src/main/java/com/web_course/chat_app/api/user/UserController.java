@@ -16,10 +16,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/get/{sess}")
-    public Optional<User> getUser(@PathVariable("sess") String id){
-//        return new User(1L, "John", "Password");
-        return userService.getUserBySession(id);
+    @GetMapping("/get/{username}")
+    public Optional<User> getUser(@PathVariable("username") String username){
+        return userService.getUser(username);
     }
 
     @PostMapping("/post")
@@ -27,8 +26,4 @@ public class UserController {
         userService.addNewUser(user);
     }
 
-    @DeleteMapping(path = "delete/{uid}")
-    public void deleteUser(@PathVariable("uid") Long id){
-        userService.deleteUser(id);
-    }
 }

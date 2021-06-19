@@ -1,8 +1,7 @@
 package com.web_course.chat_app.api.user;
-
-import org.springframework.web.context.request.RequestContextHolder;
-
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 @Entity
 @Table
@@ -18,58 +17,35 @@ public class User{
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-    private String session;
+    private Long uid;
     private String username;
-    private String password;
-    private Boolean active;
+    private String startTime;
 
 
-    public User(String username, String password) {
+    public User(String username) {
+        this.uid = Instant.now().toEpochMilli();
         this.username = username;
-        this.password = password;
-        this.session = null;
-        this.active = false;
     }
     public User(){
-
-    }
-
-//    static public String getCurrentSession(){
-//        return RequestContextHolder.currentRequestAttributes().getSessionId();
-//    }
-
-    public String getSession() {
-        return session;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public void setSession( String session) {
-        this.session = session;
-    }
-
     public boolean isActive() {
-        return this.active;
+        return true;
     }
 
-    public void setActive(Boolean active){
-        this.active = active;
+    public void startActivity(){
+        this.startTime = Timestamp.from(Instant.now()).toString();
+    }
+
+    public Long getId() {
+        return uid;
     }
 }

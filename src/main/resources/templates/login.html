@@ -12,20 +12,14 @@
 <div layout:fragment="content">
     <div class="row justify-content-center h-100">
       <div class="col-md-4 col-xl-6">
-        <h1>Login to continue</h1>
-        <form>
+        <h1>Login to chat</h1>
+        <form action="/chatroom">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" aria-describedby="emailHelp">
-
+        <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp">
+        <div id="userHelp" class="form-text">Please Enter your username.</div>
     </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1">
-        <div id="userHelp" class="form-text">We will never share your password.</div>
-      </div>
       <button type="submit" class="btn btn-primary">Login</button>
-      <button type="submit" class="btn btn-primary">Register</button>
   </form>
   </div>
 </div>

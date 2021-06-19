@@ -2,7 +2,7 @@ package com.web_course.chat_app.web_socket;
 
 import com.web_course.chat_app.api.user.User;
 import com.web_course.chat_app.api.user.UserService;
-import com.web_course.chat_app.exceptions.UserNotRegisteredException;
+import com.web_course.chat_app.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -16,47 +16,30 @@ import java.util.Optional;
 
 @Service
 public class WebSocketAuthInterceptor implements ChannelInterceptor {
-    private final WebSocketAuthenticatorService authService;
     private final UserService userService;
 
     private static final String USER = "username";
-    private static final String PASS = "password";
-
 
     @Autowired
-    public WebSocketAuthInterceptor(WebSocketAuthenticatorService service, UserService userService){
-
-        this.authService = service;
+    public WebSocketAuthInterceptor(UserService userService){
         this.userService = userService;
     }
     @Override
     public org.springframework.messaging.Message<?> preSend(Message<?> message, MessageChannel channel) {
 
-//         Instantiate an object for retrieving the STOMP headers
+//         Instantiate an object for retrieving STOMP headers
         final StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
         assert accessor != null;
-        if(accessor.getCommand() == StompCommand.CONNECT){
-            String sess = accessor.getSessionId();
-            System.out.println("Sess: " + sess);
+        if (accessor.getCommand() == StompCommand.CONNECT) {
 
             final String username = accessor.getFirstNativeHeader(USER);
-            final String password = accessor.getFirstNativeHeader(PASS);
 
-            Optional<User> userSearch = userService.getUserBySession(sess);
-            if(userSearch.isEmpty()){
-                System.out.println("userSearch is empty!");
-//                throw new UserNotRegisteredException();
-            } else if (!userSearch.get().isActive()){
-//                redirectToLogin(serverHttpResponse);
+            Optional<User> userSearch = userService.getUser(username);
+            if (userSearch.isEmpty()) {
+                System.out.println("User" + username + "didn't log in!");
+//                throw new UserNotExistException("User" + username + "didn't log in!");
             }
-
-            // authenticate the user and if that's successful add their user information to the headers.
-//            UsernamePasswordAuthenticationToken user = service.getAuthenticatedOrFail(username, password);
-//            accessor.setUser(user);
-
         }
-
         return message;
-
     }
 }
