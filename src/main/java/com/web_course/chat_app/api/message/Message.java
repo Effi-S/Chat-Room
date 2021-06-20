@@ -22,10 +22,21 @@ public class Message {
     private String username;
 
 
-    public Message(String message, String username) {
 
+    private MessageType msgType;
+
+
+    public Message(String message, String username) {
         this.message = message;
         this.username = username;
+        this.mid = Instant.now().toEpochMilli();
+        this.msgType = MessageType.REGULAR;
+    }
+
+    public Message(String message, String username, MessageType msgType) {
+        this.message = message;
+        this.username = username;
+        this.msgType = msgType;
         this.mid = Instant.now().toEpochMilli();
     }
 
@@ -33,15 +44,10 @@ public class Message {
 
     }
 
-    public String getMessage() {
-        return message;
-    }
-    public String getUsername() {
-        return username;
-    }
-    public Long getMid() {
-        return mid;
-    }
+    public String getMessage() { return message; }
+    public String getUsername() { return username; }
+    public Long getMid() { return mid; }
+    public MessageType getType() { return msgType; }
 
 
     public void setUsername(String username) {
@@ -50,4 +56,5 @@ public class Message {
     public void setMessage(String message) {
         this.message = message;
     }
+    public void setType(MessageType msgType) { this.msgType = msgType; }
 }

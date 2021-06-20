@@ -36,11 +36,26 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         // --2-- Subscribe to "/topic/messages".
         client.subscribe("/topic/messages", payload => {
-            const message_list = document.getElementById('message-list');
-            const message = document.createElement('li');
             const json_obj = JSON.parse(payload.body)
-            message.appendChild(document.createTextNode(`${json_obj.username}: ${json_obj.message}`));
-            message_list.appendChild(message);
+            if(json_obj.type === "CONNECT"){
+                const user_list = document.getElementById('user-list');
+                const new_user = document.createElement('li');
+                new_user.appendChild(document.createTextNode(`${json_obj.username}`));
+                user_list.appendChild(new_user);
+
+            } else if (json_obj.type === "DISCONNECT"){
+                const user_lst = document.getElementById('user-list');
+                for (const elem of user_lst.children) {
+                    if (elem.innerText === `${json_obj.username}`)
+                        elem.parentNode.removeChild(elem);
+                }
+            } else {
+                const message_list = document.getElementById('message-list');
+                const message = document.createElement('li');
+
+                message.appendChild(document.createTextNode(`${json_obj.username}: ${json_obj.message}`));
+                message_list.appendChild(message);
+            }
         });
     });
 });
