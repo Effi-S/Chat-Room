@@ -26,16 +26,21 @@ function sendMessage(){
 
 
 window.addEventListener('DOMContentLoaded', (event) => {
+
     client.connect({}, frame => {
-        // Subscribe to "/topic/messages".
+
+        // --1--- Add username to connected users (/app/chat.new-user).
+        const username_holder = document.getElementById("username-holder");
+        const name = username_holder.innerText;
+        client.send('/app/new-user', {}, JSON.stringify({username: name, type: 'CONNECT'}));
+
+        // --2-- Subscribe to "/topic/messages".
         client.subscribe("/topic/messages", payload => {
-            console.log(`entered: ${frame}`)
             const message_list = document.getElementById('message-list');
             const message = document.createElement('li');
             const json_obj = JSON.parse(payload.body)
             message.appendChild(document.createTextNode(`${json_obj.username}: ${json_obj.message}`));
             message_list.appendChild(message);
-
         });
     });
 });

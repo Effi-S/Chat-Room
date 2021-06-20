@@ -4,6 +4,7 @@ import com.web_course.chat_app.api.message.Message;
 import com.web_course.chat_app.api.user.UserService;
 import com.web_course.chat_app.exceptions.UserAlreadyRegisteredException;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -13,13 +14,15 @@ import org.springframework.web.socket.messaging.AbstractSubProtocolEvent;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.util.Map;
+import java.util.Objects;
+
 @Component
 public class WebSocketEventListener {
 
 
     private final SimpMessageSendingOperations  sendingOperations;
     private final UserService userService;
-    SimpMessageHeaderAccessor  headerAccessor;
 
     @Autowired
     WebSocketEventListener(SimpMessageSendingOperations sendingOperations, UserService userService){
@@ -30,27 +33,17 @@ public class WebSocketEventListener {
 
     @EventListener
     public void handleConnect(final SessionConnectedEvent event)  {
-        System.out.println("New Connection..");
-        String username = getUsernameFromEvent(event);
-         final Message message =  new Message(username + " Connected.",
-                "chat-app");
-//        sendingOperations.convertAndSend("topic/messages", message);
     }
 
-    private String getUsernameFromEvent(AbstractSubProtocolEvent event) {
-        final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        return "username";
-//        return (String) Objects.requireNonNull(headerAccessor.getSessionAttributes()).get("username");
 
-    }
 
     @EventListener
     public void handleDisconnect(SessionDisconnectEvent event){
-        String username = getUsernameFromEvent(event);
-        final Message message =  new Message(username + " Disconnected.",
-                                            "chat-app");
-        System.out.println(".. Disconnect event .. ");
-        sendingOperations.convertAndSend("topic/messages", message);
+        final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
+        final String username = (String) Objects.requireNonNull(accessor.getSessionAttributes()).get("username");
+        System.out.println("Username:" + username);
+        sendingOperations.convertAndSend("/topic/messages", new Message("Disconected", username));
+
     }
 
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class PageController {
@@ -30,12 +32,15 @@ public class PageController {
     }
 
     @RequestMapping("/chatroom")
-    public String connectToChat(Model model, @Payload String username){
+    public String connectToChat(Model model,
+                                @Payload String username,
+                                HttpServletRequest request){
         if(userService.getUser(username).isPresent()){
             throw new UserAlreadyRegisteredException("User " + username + "Already in chatroom!");
         }
 
         userService.addNewUser(new User(username));
+        request.getSession().setAttribute("username", username);
         model.addAttribute("username", username);
         return "chat-client";
     }

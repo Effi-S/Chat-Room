@@ -32,11 +32,11 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
                                    org.springframework.http.server.ServerHttpResponse serverHttpResponse,
                                    WebSocketHandler webSocketHandler, Map<String, Object> attributes) {
 
-//        String sessionId = getSessionID(serverHttpRequest);
-//        if (sessionId != null){
-//            attributes.put("sessionId", sessionId);
-//            System.out.println("SessionId: " + sessionId);
-//        }
+        String sessionId = getSessionID(serverHttpRequest);
+
+        if (sessionId != null){
+            attributes.put("sessionId", sessionId);
+        }
 //        Optional<User> userSearch = userService.getUser(sessionId);
 //        if(userSearch.isEmpty()){
 //            System.out.println("userSearch is empty!");
