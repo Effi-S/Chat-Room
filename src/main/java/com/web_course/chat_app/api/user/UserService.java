@@ -5,6 +5,7 @@ import com.web_course.chat_app.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +40,9 @@ public class UserService {
         }
         userRepository.deleteById(user.get().getId());
 
+    }
+
+    public List<User> getAllUsers() {
+       return userRepository.findAll();
     }
 }

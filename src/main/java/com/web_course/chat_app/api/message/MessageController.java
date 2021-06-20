@@ -35,5 +35,8 @@ public class MessageController {
     public List<Message> findUserMessages(@PathVariable("username") String username){
         return messageService.findAllMessagesFromUser(username);
     }
-
+    @GetMapping("/find/last5")
+    public List<Message> findUserMessages(){
+        return messageService.getLast5Messages();
+    }
 }

@@ -32,18 +32,11 @@ public class WebSocketEventListener {
     }
 
     @EventListener
-    public void handleConnect(final SessionConnectedEvent event)  {
-    }
-
-
-
-    @EventListener
     public void handleDisconnect(SessionDisconnectEvent event){
         final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) Objects.requireNonNull(accessor.getSessionAttributes()).get("username");
         System.out.println("Username:" + username);
+        userService.deleteUser(username);
         sendingOperations.convertAndSend("/topic/messages", new Message("Disconected", username));
-
     }
-
 }

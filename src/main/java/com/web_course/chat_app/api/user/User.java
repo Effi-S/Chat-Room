@@ -19,7 +19,6 @@ public class User{
     )
     private Long uid;
     private String username;
-    private String startTime;
 
 
     public User(String username) {
@@ -35,14 +34,6 @@ public class User{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public boolean isActive() {
-        return true;
-    }
-
-    public void startActivity(){
-        this.startTime = Timestamp.from(Instant.now()).toString();
     }
 
     public Long getId() {

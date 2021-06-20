@@ -33,7 +33,7 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
                                    WebSocketHandler webSocketHandler, Map<String, Object> attributes) {
 
         String sessionId = getSessionID(serverHttpRequest);
-
+        System.out.println("before-Handshake!");
         if (sessionId != null){
             attributes.put("sessionId", sessionId);
         }

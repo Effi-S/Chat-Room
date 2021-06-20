@@ -3,6 +3,7 @@ package com.web_course.chat_app.api.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -26,4 +27,8 @@ public class UserController {
         userService.addNewUser(user);
     }
 
+    @GetMapping("/get/all")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
 }

@@ -23,7 +23,9 @@ public class ChatController {
     @SendTo("/topic/messages")
     public Message  userLogin(@Payload final Message message,
                             SimpMessageHeaderAccessor accessor){
+
         String username = message.getUsername();
+        System.out.println("new-user: " + username);
         Objects.requireNonNull(accessor.getSessionAttributes()).put("username", username);
         return new Message("Joined the chat", username);
   }
