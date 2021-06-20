@@ -1,6 +1,7 @@
 package com.web_course.chat_app.web_socket;
 
 import com.web_course.chat_app.api.message.Message;
+import com.web_course.chat_app.api.user.User;
 import com.web_course.chat_app.api.user.UserService;
 import com.web_course.chat_app.exceptions.UserAlreadyRegisteredException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,7 @@ public class WebSocketEventListener {
     public void handleDisconnect(SessionDisconnectEvent event){
         final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) Objects.requireNonNull(accessor.getSessionAttributes()).get("username");
-        System.out.println("Username:" + username);
         userService.deleteUser(username);
-        sendingOperations.convertAndSend("/topic/messages", new Message("Disconected", username));
+        sendingOperations.convertAndSend("/topic/messages", new Message("Disconnected", username));
     }
 }

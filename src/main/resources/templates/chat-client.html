@@ -24,7 +24,7 @@
       </div>
       <div id="chat-area">
           <div class="row justify-content-center h-100">
-              <div class="col-md-8 col-xl-6">
+              <div class="col-md-8 col-xl-5">
                   <div class="card">
                       <div class="card-header">
                           <div class="d-flex bd-highlight">
@@ -34,13 +34,33 @@
                           </div>
                       </div>
                       <div class="card-body">
-                          <ul id="message-list"></ul>
+                          <ul id="message-list">
+                              <th:block th:each="msg : ${messages}">
+                                  <li th:text="${msg.getUsername()} + ': ' + ${msg.getMessage()}">:</li>
+                              </th:block>
+                          </ul>
                       </div>
                       <div class="input-group mb-3">
                             <textarea id="message-input" class="form-control" placeholder="Type your message..."
                                       aria-label="Message"></textarea>
                           <button class="fas fa-paper-plane send-button" onclick="sendMessage()"></button>
                       </div>
+                  </div>
+              </div>
+              <div class="col-md-1 col-xl-1">
+                  <div class="card">
+                      <div class="card-header">
+                          <span>Active Users: </span>
+                      </div>
+                      <div class="card-body">
+
+                          <ul id="user-list">
+                              <th:block th:each="user : ${users}">
+                                  <li th:text="${user.getUsername()}"></li>
+                              </th:block>
+                          </ul>
+                      </div>
+                      <div class="input-group mb-3" ></div>
                   </div>
               </div>
           </div>

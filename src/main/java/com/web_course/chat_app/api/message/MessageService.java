@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -32,6 +34,8 @@ public class MessageService {
         return messageRepository.findMessagesFromUser(username);
     }
     public List<Message> getLast5Messages(){
-        return messageRepository.findLast5(PageRequest.ofSize(5));
+        List<Message> last5 = messageRepository.findLast5(PageRequest.ofSize(5));
+        Collections.reverse(last5);
+        return last5;
     }
 }
