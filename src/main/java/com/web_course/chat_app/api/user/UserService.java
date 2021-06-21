@@ -27,10 +27,11 @@ public class UserService {
         Optional<User> userSearch =
                 userRepository.findUser(user.getUsername());
 
-        if(userSearch.isPresent()){
-                throw new UserAlreadyRegisteredException("User " +
-                        userSearch.get().getUsername() + "Already in chatroom!");
-        }
+        if(userSearch.isPresent())
+            throw new UserAlreadyRegisteredException(
+                    String.format("User %s Already in the chatroom!",
+                            userSearch.get().getUsername()));
+
         userRepository.save(user);
     }
 

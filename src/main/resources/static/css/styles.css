@@ -1,10 +1,12 @@
 body,html {
     background-color: rgba(50, 48, 120, 1) !important;
 }
+
 h1 {
     color: white !important;
     font-family: sans-serif;
 }
+
 button{
     background-color: rgba(34, 29, 47, 1) !important;
     box-shadow: 0 0 1px rgba(50, 48, 120, 1);

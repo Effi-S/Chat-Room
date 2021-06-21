@@ -14,9 +14,16 @@
 </head>
 <body>
 
+<div th:fragment="custom_alert" id="invalid-input-alert" class="alert alert-warning alert-dismissible fade show" role="alert" >
+    <button class="close" style="text-align: right;" type="button" data-dismiss="alert" aria-label="Close"
+            onclick=document.getElementById("invalid-input-alert").remove() >
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong th:text="${msg}"></strong>
+    <p><strong>Please log in.</strong></p>
+</div>
+
 <p>Page content goes here</p>
-
-
 
 <div th:fragment="footer">
 <!--  TODO: Define footer here-->

@@ -27,7 +27,7 @@ public class WebSocketAuthInterceptor implements ChannelInterceptor {
     @Override
     public org.springframework.messaging.Message<?> preSend(Message<?> message, MessageChannel channel) {
         System.out.println("WebSocketAuthInterceptor");
-//         Instantiate an object for retrieving STOMP headers
+//        Instantiate an object for retrieving STOMP headers
 //        final StompHeaderAccessor accessor = SimpMessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 //        assert accessor != null;
 //        if (accessor.getCommand() == StompCommand.CONNECT) {

@@ -1,5 +1,6 @@
 package com.web_course.chat_app.api.user;
 
+import com.web_course.chat_app.exceptions.UserAlreadyRegisteredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,8 @@ public class UserController {
     }
 
     @PostMapping("/post")
-    public void registerUser(@Payload String username, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void registerUser(@Payload String username,
+                             HttpServletRequest request, HttpServletResponse response) throws IOException {
         userService.addNewUser(new User(username));
         request.getSession().setAttribute("username", username);
         response.sendRedirect("/chatroom");

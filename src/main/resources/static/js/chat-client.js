@@ -12,6 +12,8 @@ function sendMessage(){
     // --1-- Get message from input area
     const input = document.getElementById("message-input");
     const message = input.value;
+    console.log("!message.trim(): " + !message.trim())
+    if(!message.trim()) return;
 
     // --2-- Get username from thymeleaf
     const username_holder = document.getElementById("username-holder");

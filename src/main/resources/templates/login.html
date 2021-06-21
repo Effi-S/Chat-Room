@@ -9,18 +9,22 @@
 
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" >
+  <div th:if="${msg != null}">
+    <div th:replace="fragments :: custom_alert"></div>
+  </div>
     <div class="row justify-content-center h-100">
       <div class="col-md-4 col-xl-6">
         <h1>Login to chat</h1>
         <form th:action="@{/api/v1/users/post}" method="post">
-      <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp">
-        <div id="userHelp" class="form-text">Please Enter your username.</div>
-    </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-  </form>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username"
+                   aria-describedby="usernameHelp" required>
+            <div id="userHelp" class="form-text">Please Enter your username.</div>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
   </div>
 </div>
 </div>
