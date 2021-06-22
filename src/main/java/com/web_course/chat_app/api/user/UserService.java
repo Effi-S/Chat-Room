@@ -29,7 +29,8 @@ public class UserService {
 
         if(userSearch.isPresent())
             throw new UserAlreadyRegisteredException(
-                    String.format("User %s Already in the chatroom!",
+                    String.format("User %s Already in the chatroom!<br/>" +
+                                    "Please log in with a different name.",
                             userSearch.get().getUsername()));
 
         userRepository.save(user);
@@ -38,7 +39,7 @@ public class UserService {
     public void deleteUser(String username) {
         Optional<User> user = userRepository.findUser(username);
         if(user.isEmpty()){
-            throw new UserNotExistException("User: " + username + " Does not exist");
+            throw new UserNotExistException(String.format("User: %s Does not exist", username));
         }
         userRepository.deleteById(user.get().getId());
 

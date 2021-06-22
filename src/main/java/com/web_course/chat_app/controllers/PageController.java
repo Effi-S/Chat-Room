@@ -50,7 +50,7 @@ public class PageController {
         // --1-- If username is empty (not in session) throw UserNotExistException
         String username = (String) request.getSession().getAttribute("username");
         if(username == null || username.isBlank()){
-            throw new UserNotExistException("No Username entered");
+            throw new UserNotExistException("No Username entered.<br />Please Log in to Continue.. ");
         }
 //        // --2-- If username in DB throw UserAlreadyRegisteredException
 //        List<User> allUsers = userService.getAllUsers();
