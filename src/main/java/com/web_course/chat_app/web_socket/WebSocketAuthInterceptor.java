@@ -16,10 +16,20 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * The type Web socket auth interceptor. <br/>
+ * This Class is Disabled.<br/>
+ * Can be used to validate the messages being passed.
+ */
 @Service
 public class WebSocketAuthInterceptor implements ChannelInterceptor {
     private final UserService userService;
 
+    /**
+     * Instantiates a new Web socket auth interceptor.
+     *
+     * @param userService the user service
+     */
     @Autowired
     public WebSocketAuthInterceptor(UserService userService){
         this.userService = userService;

@@ -13,6 +13,10 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import java.util.Objects;
 
+/**
+ * This class Handles Websocket Events. <br/>
+ * Custom Handles for CONNECT, DISCONNECT exist here.
+ */
 @Component
 public class WebSocketEventListener {
 
@@ -20,12 +24,25 @@ public class WebSocketEventListener {
     private final SimpMessageSendingOperations  sendingOperations;
     private final UserService userService;
 
+    /**
+     * Instantiates a new Web socket event listener.
+     *
+     * @param sendingOperations the sending operations
+     * @param userService       the user service
+     */
     @Autowired
     WebSocketEventListener(SimpMessageSendingOperations sendingOperations, UserService userService){
 
         this.sendingOperations = sendingOperations;
         this.userService = userService;
     }
+
+    /**
+     * Handle connect. <br/>
+     * Sends a " some-user : Connected" message.
+     *
+     * @param event the event
+     */
     @EventListener
     public void handleConnect(SessionConnectEvent event){
         final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
@@ -34,6 +51,11 @@ public class WebSocketEventListener {
                 new Message("Connected", username, MessageType.CONNECT));
     }
 
+    /**
+     *  Handle disconnect.
+     *  Sends a " some-user : Disconnected" message.
+     * @param event the event
+     */
     @EventListener
     public void handleDisconnect(SessionDisconnectEvent event){
         final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
