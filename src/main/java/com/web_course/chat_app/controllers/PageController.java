@@ -52,17 +52,8 @@ public class PageController {
         if(username == null || username.isBlank()){
             throw new UserNotExistException("No Username entered.<br />Please Log in to Continue.. ");
         }
-//        // --2-- If username in DB throw UserAlreadyRegisteredException
-//        List<User> allUsers = userService.getAllUsers();
-//        List<String> allUserNames = allUsers.stream()
-//                .map(User::getUsername).toList();
-//
-//        System.out.println("All usernames: " + allUserNames);
-//        if(allUserNames.contains(username)){
-//            throw new UserAlreadyRegisteredException(String.format("User %s Already in chat",
-//                    username));
-//        }
-        //--3-- Supply model attributes
+
+        //--2-- Supply model attributes
         model.addAttribute("username", username);
         model.addAttribute("messages",  messageService.getLast5Messages());
         model.addAttribute("users", userService.getAllUsers());
