@@ -41,37 +41,11 @@ public class PageController {
      *
      * @return "/login"
      */
-    @RequestMapping("/")
+    @RequestMapping(value = {"/", "/login"})
     public String landingPage(){
         return "/login";
     }
 
-
-    /**
-     * Login page.
-     *
-     * @return login View.
-     */
-    @RequestMapping("/login")
-    public String loginPage(){
-        try {
-            return "login";
-        } catch (UserAlreadyRegisteredException ex){
-            throw ex;
-        }
-    }
-
-    /**
-     * Logout endpoint.
-     * Removes "username" from session and returns to login page.
-     *
-     * @return login View.
-     */
-    @RequestMapping("/logout")
-    public String logOut(HttpServletRequest request){
-        request.getSession().removeAttribute("username");
-        return "login";
-    }
     /**
      * Connect to chatroom.
      *
@@ -83,9 +57,12 @@ public class PageController {
     public String connectToChat(Model model,
                                 HttpServletRequest request){
 
+        System.out.println("session Id" + request.getSession().getId());
+        System.out.println(userService.getUserBySessionId(request.getSession().getId()).isPresent());
+
         // --1-- If username is empty (not in session) throw UserNotExistException
         String username = (String) request.getSession().getAttribute("username");
-        if(username == null || username.isBlank()){
+        if(username == null || username.isBlank()) {
             throw new UserNotExistException("No Username entered.<br />Please Log in to Continue.. ");
         }
 
@@ -95,4 +72,19 @@ public class PageController {
         model.addAttribute("users", userService.getAllUsers());
         return "chat-client";
     }
+
+    /**
+     * Logout endpoint.
+     * Removes "username" from session and returns to login page.
+     *
+     * @return login View.
+     */
+    @RequestMapping("/logout")
+    public String logOut(HttpServletRequest request){
+        String username = (String) request.getSession().getAttribute("username");
+        request.getSession().removeAttribute("username");
+        userService.deleteUser(username);
+        return "login";
+    }
+
 }

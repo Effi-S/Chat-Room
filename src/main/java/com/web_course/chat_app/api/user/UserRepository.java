@@ -30,6 +30,15 @@ public interface UserRepository
      * @return the optional containing the user.
      */
     @Query("SELECT u from User u WHERE u.username = ?1")
-    Optional<User> findUser(String username);
+    Optional<User> findUserByUsername(String username);
+
+    /**
+     * Find if any user has given sessionId.
+     *
+     * @param sessionId the sessionId of the user to find.
+     * @return the optional containing the user.
+     */
+    @Query("SELECT u from User u WHERE u.sessionId = ?1")
+    Optional<User> findUserBySession(String sessionId);
 
 }

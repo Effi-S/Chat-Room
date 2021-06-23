@@ -36,7 +36,7 @@ public class UserController {
      */
     @GetMapping("/get/{username}")
     public Optional<User> getUser(@PathVariable("username") String username){
-        return userService.getUser(username);
+        return userService.getUserByUsername(username);
     }
 
     /**
@@ -50,8 +50,11 @@ public class UserController {
     @PostMapping("/post")
     public void registerUser(@Payload String username,
                              HttpServletRequest request, HttpServletResponse response) throws IOException {
-        userService.addNewUser(new User(username));
+
         request.getSession().setAttribute("username", username);
+
+        userService.addNewUser(username);
+
         response.sendRedirect("/chatroom");
     }
 

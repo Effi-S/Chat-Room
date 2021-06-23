@@ -3,6 +3,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * This ControllerAdvice is in charge of routing all User related exceptions.
@@ -18,7 +20,8 @@ public class UserExceptionHandler{
      */
     @ExceptionHandler(value={UserAlreadyRegisteredException.class,
             UserNotExistException.class})
-        public ModelAndView backToLoginPage(Exception ex) {
+        public ModelAndView backToLoginPage(Exception ex, HttpSession session) {
+        session.removeAttribute("username");
         ModelAndView mav = new ModelAndView();
         mav.addObject("msg", ex.getMessage());
         mav.setViewName("/login");

@@ -10,7 +10,6 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-
 import java.util.Objects;
 
 /**
@@ -45,10 +44,15 @@ public class WebSocketEventListener {
      */
     @EventListener
     public void handleConnect(SessionConnectEvent event){
+
         final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) Objects.requireNonNull(accessor.getSessionAttributes()).get("username");
+
+        if(userService.getUserByUsername(username).isEmpty()) // this can happen if page refreshed.
+            userService.addNewUser(username);
+
         sendingOperations.convertAndSend("/topic/messages",
-                new Message("Connected", username, MessageType.CONNECT));
+                new Message("Joined the chat", username, MessageType.CONNECT));
     }
 
     /**
@@ -60,12 +64,14 @@ public class WebSocketEventListener {
     public void handleDisconnect(SessionDisconnectEvent event){
         final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) Objects.requireNonNull(accessor.getSessionAttributes()).get("username");
-        userService.deleteUser(username);
+
+        if(userService.getUserByUsername(username).isPresent())
+            userService.deleteUser(username);
+
         System.out.println("DISCONNECT EVENT " + username);
         sendingOperations.convertAndSend("/topic/messages",
-                new Message("Disconnected", username, MessageType.DISCONNECT));
-        sendingOperations.convertAndSend("/topic/messages",
-                new Message("Left the Chat.", username, MessageType.REGULAR));
+                new Message("Left the Chat.", username, MessageType.DISCONNECT));
 
     }
+
 }

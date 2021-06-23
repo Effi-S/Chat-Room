@@ -1,5 +1,8 @@
 package com.web_course.chat_app.api.user;
+import org.springframework.web.context.annotation.SessionScope;
+
 import javax.persistence.*;
+import javax.servlet.http.HttpSession;
 import java.time.Instant;
 
 /**
@@ -17,26 +20,39 @@ public class User{
     @SequenceGenerator(
            name = "user_sequence",
            sequenceName = "user_sequence",
-            allocationSize = 1
+           allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
+
     private Long uid;
     /** The name of the user.**/
     private String username;
 
+    /** Session ID **/
+    private String sessionId;
 
-    /**
-     * Instantiates a new User.
-     *
-     * @param username the username of the user to create.
-     */
-    public User(String username) {
-        this.uid = Instant.now().toEpochMilli();
+
+    public User(String username, String sessionId) {
         this.username = username;
+        this.sessionId = sessionId;
     }
+
+
+
+
+//    /**
+//     * Instantiates a new User.
+//     *
+//     * @param username the username of the user to create.
+//     */
+//    public User(String username) {
+//        this.uid = Instant.now().toEpochMilli();
+//        this.username = username;
+//        this.sessionId =
+//    }
 
     /**
      * Instantiates a new User.<br />
@@ -71,5 +87,14 @@ public class User{
      */
     public Long getId() {
         return uid;
+    }
+
+    /**
+     * Gets user session id.
+     *
+     * @return The user's session id.
+     */
+    public String getSessionId() {
+        return sessionId;
     }
 }

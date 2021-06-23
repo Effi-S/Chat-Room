@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import java.util.Objects;
+
 
 
 /**
@@ -45,23 +44,4 @@ public class ChatController {
         return message;
     }
 
-    /**
-     * User login message.
-     * Re-routes from "app/new-user" to "app/topic/messages" for consumption. <br/>
-     * Indicates a new user logged on. <br/>
-     * The username of the user logged on is retrieved from the Session attributes.
-     *
-     * @param message  The message sent to "app/chat".
-     * @param accessor The accessor is used  for getting the username from the session attributes.
-     * @return The message after adding the username, re-routed to "app/topic/message".
-     */
-    @MessageMapping("/new-user")
-    @SendTo("/topic/messages")
-    public Message  userLogin(@Payload final Message message,
-                            SimpMessageHeaderAccessor accessor){
-
-        String username = message.getUsername();
-        Objects.requireNonNull(accessor.getSessionAttributes()).put("username", username);
-        return new Message("Joined the chat", username);
-  }
 }

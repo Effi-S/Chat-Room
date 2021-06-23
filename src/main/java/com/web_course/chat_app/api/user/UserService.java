@@ -5,6 +5,7 @@ import com.web_course.chat_app.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,9 @@ public class UserService {
     /** Bean of our User Repository **/
     private final UserRepository userRepository;
 
+    /** Session Info */
+    HttpSession session;
+
     /**
      * Instantiates a new User service. <br/>
      * This is the Service layer of user Table in DB.
@@ -25,29 +29,47 @@ public class UserService {
      * @param userRepository the user repository
      */
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, HttpSession session) {
 
         this.userRepository = userRepository;
+        this.session = session;
     }
 
     /**
-     * Gets a user.
+     * Gets a user based on username.
      *
      * @param username the username of the user to get.
      * @return the user
      */
-    public Optional<User> getUser(String username) {
-        return userRepository.findUser(username);
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
     /**
+     * Gets a user based on sessionId.
+     *
+     * @param sessionId the sessionId of the user to get.
+     * @return the user
+     */
+    public Optional<User> getUserBySessionId(String sessionId) {
+        return userRepository.findUserBySession(sessionId);
+    }
+    /**
      * Add new user.
      *
-     * @param user the user
+     * @param username the user's username
      */
-    public void addNewUser(User user){
-        Optional<User> userSearch =
-                userRepository.findUser(user.getUsername());
+    public void addNewUser(String  username){
+
+        User user = new User(username, session.getId());
+
+        Optional<User> userSearch = userRepository.findUserBySession(user.getSessionId());
+
+        if(userSearch.isPresent())
+            throw new UserAlreadyRegisteredException("The chat is open in another Window/Tab.<br/>" +
+                    "Please logout and try again");
+
+         userSearch = userRepository.findUserByUsername(user.getUsername());
 
         if(userSearch.isPresent())
             throw new UserAlreadyRegisteredException(
@@ -64,7 +86,7 @@ public class UserService {
      * @param username the username of the user to delete.
      */
     public void deleteUser(String username) {
-        Optional<User> user = userRepository.findUser(username);
+        Optional<User> user = userRepository.findUserByUsername(username);
         if(user.isEmpty()){
             throw new UserNotExistException(String.format("User: %s Does not exist", username));
         }
@@ -80,4 +102,16 @@ public class UserService {
     public List<User> getAllUsers() {
        return userRepository.findAll();
     }
+
+//    /**
+//     * Gets all of the usernames of the Users.
+//     *
+//     * @return List of All the usernames.
+//     */
+//    public List<String> getAllUsernames() {
+//
+//        List<String> usernames = new ArrayList<>();
+//        this.getAllUsers().forEach(user-> {usernames.add(user.getUsername());});
+//        return usernames;
+//    }
 }
