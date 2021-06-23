@@ -1,24 +1,35 @@
+//Here lies the code relevant to searching functionalities in the chatroom.
+
+//List Element with our search results.
 const search_list = document.getElementById("search-message-list")
+
+//List Element with our messages.
 const original_list = document.getElementById("message-list")
+
+//The Button element that send messages - we want to shut this off when we do searches
 const send_button = document.getElementById("message-send-button")
 
-
+// -- -- -- Utility functions -- -- --
+// Utility function for clearing our search list
 function clear_search_list(){
     search_list.innerHTML = ''
 }
 
-function add_msgs_to_search(msgs) {
-    if(msgs.length === 0){
-        msgs.appa = [{'username': 'chat-app', 'message': 'Nothing found'}]
+// Utility function for adding messages to search list
+function add_msg_lst_to_search(msg_lst) {
+    if(msg_lst.length === 0){
+        msg_lst.values = [{'username': 'chat-app', 'message': 'Nothing found'}]
     }
-    for(const elem of msgs.values()){
+    for(const elem of msg_lst.values()){
         const li = document.createElement("li");
         li.innerText = `${elem.username}: ${elem.message}`
         search_list.append(li)
     }
 
 }
+// -- -- --
 
+//function for when the is searching for a user.
 function user_search(){
     clear_search_list()
     const username = document.getElementById("username-search").value
@@ -27,7 +38,7 @@ function user_search(){
     fetch(api_url).then(response => {
         return response.json();
     }).then(data => {
-        add_msgs_to_search(data)
+        add_msg_lst_to_search(data)
     }).catch(err => {
         console.warn(err);
     })
@@ -37,7 +48,7 @@ function user_search(){
     send_button.disable = true
 }
 
-
+// function for when the user searches for a words / sub-string
 function word_search(){
     clear_search_list()
     let word = document.getElementById("word-search").value
@@ -46,7 +57,7 @@ function word_search(){
     fetch(api_url).then(response => {
         return response.json();
     }).then(data => {
-        add_msgs_to_search(data)
+        add_msg_lst_to_search(data)
     }).catch(err => {
         console.warn(err);
     })
@@ -56,6 +67,7 @@ function word_search(){
     send_button.disable = true
 }
 
+// leaving the search results and returning to chat messages.
 function back_to_messages(){
     original_list.hidden = false
     search_list.hidden = true

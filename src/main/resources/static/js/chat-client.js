@@ -1,20 +1,18 @@
 // Try to set up WebSocket connection with the handshake at "http://localhost:8080/stomp"
 const sock = new SockJS("http://localhost:8080/stomp", null, { timeout: 15000});
+
 // Create a new StompClient object with the WebSocket endpoint
 const client = Stomp.over(sock);
-const session_id = /SESS\w*ID=([^;]+)/i.test(document.cookie) ? RegExp.$1 : false;
-// Start the STOMP communications, provide a callback for when the CONNECT frame arrives.
 
-
-// Take the value in the ‘message-input’ text field and send it to the server with empty headers.
+// Take the value in the ‘message-input’ text field and send it to the server.
 function sendMessage(){
 
-    // --1-- Get message from input area
+    // --1-- Get message from input area.
     const input = document.getElementById("message-input");
     const message = input.value;
     if(!message.trim()) return;
 
-    // --2-- Get username from thymeleaf
+    // --2-- Get username from thymeleaf.
     const username_holder = document.getElementById("username-holder");
     const name = username_holder.innerText;
     console.log(`username: ${name} message: ${message}`)
@@ -25,7 +23,11 @@ function sendMessage(){
     input.value = "";
 }
 
-
+// Here we add the connection to the stomp endpoints
+// Since we are connecting here we also will send
+// A message declaring to everyone that we have entered the chat.
+// The internal Fallback function of client.connect
+// Is the function that occurs when a message is received
 window.addEventListener('DOMContentLoaded', (event) => {
 
     client.connect({}, frame => {
@@ -61,6 +63,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+
+//Added feature - Message sent when Enter pressed
+//This has the downside that the user can not send multi-line messages unless copy pasted.
 window.addEventListener("keydown",
     function (e) {
     if (e.key === 'Enter') {
