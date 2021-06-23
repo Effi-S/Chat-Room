@@ -4,8 +4,7 @@ const send_button = document.getElementById("message-send-button")
 
 
 function clear_search_list(){
-    for(const elem of search_list.children)
-        search_list.removeChild(elem)
+    search_list.innerHTML = ''
 }
 
 function add_msgs_to_search(msgs) {
