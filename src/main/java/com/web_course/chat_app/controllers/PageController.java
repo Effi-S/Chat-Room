@@ -60,6 +60,18 @@ public class PageController {
             throw ex;
         }
     }
+
+    /**
+     * Logout endpoint.
+     * Removes "username" from session and returns to login page.
+     *
+     * @return login View.
+     */
+    @RequestMapping("/logout")
+    public String logOut(HttpServletRequest request){
+        request.getSession().removeAttribute("username");
+        return "login";
+    }
     /**
      * Connect to chatroom.
      *
