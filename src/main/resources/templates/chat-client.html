@@ -3,6 +3,23 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="default">
+
+<!--    This Thymeleaf template holds the View for the chatroom itself.                                             -->
+<!--    This page, like all views in app should, uses the default decorator (default.html) as it's layout decorator.-->
+<!--                                                                                                                -->
+<!--    With this View the user can:                                                                                -->
+<!--        a. Send a message to all other users in the chatroom - see  chat-client.js                              -->
+<!--        b. Use Various Searches - see searches.js                                                               -->
+<!--                                                                                                                -->
+<!--                                                                                                                -->
+<!--   Controllers can pass a variable called "messages"  - a list of Message objects                               -->
+<!--   These Messages will be the first messages to be displayed when entering the page                             -->
+<!--                                                                                                                -->
+<!--   As well Controllers can pass a variable called "users"  - a list of User objects                             -->
+<!--   These Users will be the first users to be displayed when entering the page                                   -->
+<!--                                                                                                                -->
+<!--   The "username"  variable should be passed as well - a String                                                 -->
+<!--   This is the username of the current user to be displayed                                                     -->
 <head>
     <title>Chat App Template</title>
 </head>
@@ -11,6 +28,7 @@
       <div id="search-area">
           <div class="pt-5 row justify-content-center h-100">
               <div class="col-md-8 col-xl-7">
+                  <!--                Searches section                  -->
                   <div class="input-group mb-3">
                       <input id="username-search" type="text" class="form-control"
                              placeholder="Username-Search" aria-label="Username-Search">
@@ -29,6 +47,7 @@
       </div>
       <div id="chat-area">
           <div class="row justify-content-center h-100">
+              <!--                Messages section                  -->
               <div class="col-md-6 col-xl-5">
                   <div class="card">
                       <div class="card-header">
@@ -55,6 +74,7 @@
                       </div>
                   </div>
               </div>
+              <!--                Users section                     -->
               <div class="col-md-2 col-xl-2">
                   <div class="card">
                       <div class="card-header">
@@ -72,6 +92,8 @@
               </div>
           </div>
       </div>
+
+<!--                JavaScript section                               -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.js"
               integrity="sha512-lyIq9fRcCeSCXhp41XC/250UBmypAHV8KW+AhLcSEIksWHBfhzub6XXwDe67wTpOG8zrO2NAU/TYmEaCW+aQSg=="
               crossorigin="anonymous"

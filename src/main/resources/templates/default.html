@@ -1,13 +1,11 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta http-equiv="refresh" content="0; URL=client/chat-client.html">-->
-<!--    <title>Landing Page</title>-->
-<!--</head>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="eng" xmlns:th="http://www.thymleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--             This is the default layout for all views in this application                   -->
+<!--                 **** All view should use this layout to keep the style centralized.   ***  -->
+<!--                                                                                            -->
+<!--             The Header and footer are kept separately as fragments - see fragments.html    -->
+<!--              ( The css and bootstrap are in head fragment )                                -->
 <head th:replace="fragments :: head">
     <title> head goes here </title>
 </head>

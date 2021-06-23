@@ -25,7 +25,6 @@ function add_msg_lst_to_search(msg_lst) {
         li.innerText = `${elem.username}: ${elem.message}`
         search_list.append(li)
     }
-
 }
 // -- -- --
 

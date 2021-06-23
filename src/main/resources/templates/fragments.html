@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="eng" xmlns:th="http://www.thymleaf.org/" >
-<!DOCTYPE html>
+<!--    Here we keep fragments that can be used by any view                                         -->
+
+<!--    The Head fragment holds the main css and bootsrap of the application a                      -->
+<!--    It also holds Font-Awesome for icons and a link to icon.png for the header oicon of the app. -->
 <head lang="en" th:fragment="head">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -14,6 +17,9 @@
 </head>
 <body>
 
+<!--    This fragment is a custom  alert that can be added to the top of the page .                             -->
+<!--    A controller that renders a view using this fragment must provide a "msg" variable in the model.        -->
+<!--    The msg variable will indicate the message to be displayed in the alert.                                -->
 <div th:fragment="custom_alert" id="invalid-input-alert" class="alert alert-warning alert-dismissible fade show" role="alert" >
     <button class="close" style="text-align: right;" type="button" data-dismiss="alert" aria-label="Close"
             onclick=document.getElementById("invalid-input-alert").remove() >
@@ -24,8 +30,9 @@
 
 <p>Page content goes here</p>
 
+<!--Footer fragment - TODO: this might be useful later -->
 <div th:fragment="footer">
-<!--  TODO: Define footer here-->
+<!--  Define footer here-->
 </div>
 
 
