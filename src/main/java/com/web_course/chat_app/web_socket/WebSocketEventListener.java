@@ -2,7 +2,6 @@ package com.web_course.chat_app.web_socket;
 
 import com.web_course.chat_app.api.message.Message;
 import com.web_course.chat_app.api.message.MessageType;
-import com.web_course.chat_app.api.user.UserController;
 import com.web_course.chat_app.api.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -20,8 +19,9 @@ import java.util.Objects;
 @Component
 public class WebSocketEventListener {
 
-
+    /** For redirecting messages from input endpoint to output endpoint */
     private final SimpMessageSendingOperations  sendingOperations;
+    /** UserService Layer for Querying about Users */
     private final UserService userService;
 
     /**

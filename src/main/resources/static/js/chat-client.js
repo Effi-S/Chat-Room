@@ -1,3 +1,7 @@
+// In this JS file we connect to the Websocket from th clients side
+// And hold all of the client-side logic for sending and receiving messages using
+
+
 // Set up WebSocket connection to "http://localhost:8080/stomp" as handshake entry-point.
 const sock = new SockJS("http://localhost:8080/stomp", null, { timeout: 15000});
 

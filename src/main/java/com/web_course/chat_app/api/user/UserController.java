@@ -16,8 +16,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path="api/v1/users")
 public class UserController {
-    private final UserService userService;
 
+    /** The service layer **/
+    private final UserService userService;
     /**
      * Instantiates a new User controller.
      *

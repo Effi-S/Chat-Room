@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping(path="api/v1/messages")
 public class MessageController {
 
+    /** The Service connection */
     private final MessageService messageService;
 
     /**

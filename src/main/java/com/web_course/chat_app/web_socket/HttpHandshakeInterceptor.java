@@ -13,7 +13,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
- * The type Http handshake interceptor.
+ * This class intercepts the WebSocket handshake.<br/>
+ * Here session attributes are added to STOMP protocol.<br/>
+ * As well, in the event of refreshing the page, we make sure the user is not removed from the database.
  */
 @Component
 @Controller

@@ -29,6 +29,7 @@ public class UserService {
      * This is the Service layer of user Table in DB.
      *
      * @param userRepository the user repository
+     * @param session - For adding session info to created Users.
      */
     @Autowired
     public UserService(UserRepository userRepository, HttpSession session) {

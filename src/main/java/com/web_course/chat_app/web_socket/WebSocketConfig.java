@@ -10,13 +10,17 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 /**
- * This class configures our STOMP endpoints.
+ * This class configures our STOMP endpoints.<br/>
+ * Connects to Event listeners and Handshake interceptors.
  */
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
+    /** User service layer connection for Querying about users */
     private final UserService userService;
+
+    /** channel interceptor for authenticating messaging */
     private final WebSocketAuthInterceptor channelInterceptor;
 
     /**

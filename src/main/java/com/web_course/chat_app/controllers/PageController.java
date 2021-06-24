@@ -1,21 +1,19 @@
 package com.web_course.chat_app.controllers;
 import com.web_course.chat_app.api.message.MessageService;
 import com.web_course.chat_app.api.user.UserService;
-import com.web_course.chat_app.exceptions.UserAlreadyRegisteredException;
 import com.web_course.chat_app.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
 /**
  * The Page controller. <br/>
- * This controls the Request mapping of our app.
- *
+ * This class controls HTTP Request mapping of our app.<br/>
+ * This include: login, logout and chatroom.
  */
 @Controller
 public class PageController {
@@ -53,6 +51,7 @@ public class PageController {
      * @param model   The model is used for adding variables to Thymeleaf.
      * @param request The request is used for getting the username from session attributes.
      * @return The chat-client View.
+     * @throws IOException - see HttpServletRequest
      */
     @RequestMapping("/chatroom")
     public String connectToChat(Model model,
@@ -72,9 +71,10 @@ public class PageController {
     }
 
     /**
-     * Logout endpoint.
-     * Removes "username" from session and returns to login page.
+     *   Logout endpoint.<br/>
+     *   Removes "username" from session and returns to login page.
      *
+     * @param request - For getting username from session.
      * @return login View.
      */
     @RequestMapping("/logout")

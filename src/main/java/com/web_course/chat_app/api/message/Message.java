@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 /**
- * Message holds all information about a message.
+ * Message holds all information about a message.<br/>
  * Messages are stored in "message" table in DB.
  */
 @Entity

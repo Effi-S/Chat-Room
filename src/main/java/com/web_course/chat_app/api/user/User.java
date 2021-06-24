@@ -34,25 +34,17 @@ public class User{
     /** Session ID **/
     private String sessionId;
 
-
+    /**
+     * Instantiates a new User.
+     *
+     * @param username The username of the user to create.
+     * @param sessionId - The current session-Id to add to the user.
+     */
     public User(String username, String sessionId) {
         this.username = username;
         this.sessionId = sessionId;
     }
 
-
-
-
-//    /**
-//     * Instantiates a new User.
-//     *
-//     * @param username the username of the user to create.
-//     */
-//    public User(String username) {
-//        this.uid = Instant.now().toEpochMilli();
-//        this.username = username;
-//        this.sessionId =
-//    }
 
     /**
      * Instantiates a new User.<br />

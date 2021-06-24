@@ -16,6 +16,7 @@ public class UserExceptionHandler{
      * Routes Back to login page .
      *
      * @param ex the ex.
+     * @param session - For changing view to login.
      * @return the model and view
      */
     @ExceptionHandler(value={UserAlreadyRegisteredException.class,

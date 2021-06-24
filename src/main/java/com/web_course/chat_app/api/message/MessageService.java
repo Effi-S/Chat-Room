@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class MessageService {
 
+    /** Repository Layer **/
     private final MessageRepository messageRepository;
 
     /**

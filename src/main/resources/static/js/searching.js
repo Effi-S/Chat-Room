@@ -1,6 +1,6 @@
 // Here lies the code relevant to searching functionalities in the chatroom.
 // The 2 searches are:
-//      1. Searching for messages containing a sun-string/word.
+//      1. Searching for messages containing a sub-string/word.
 //      2. Searching for messages by a particular user.
 
 //List Element with our search results.
