@@ -1,12 +1,11 @@
-// Try to set up WebSocket connection with the handshake at "http://localhost:8080/stomp"
+// Set up WebSocket connection to "http://localhost:8080/stomp" as handshake entry-point.
 const sock = new SockJS("http://localhost:8080/stomp", null, { timeout: 15000});
 
-// Create a new StompClient object with the WebSocket endpoint
+// Create a new StompClient object with the WebSocket endpoint.
 const client = Stomp.over(sock);
 
-// Take the value in the ‘message-input’ text field and send it to the server.
+// Takes the value in the ‘message-input’ text field and send it to the server.
 function sendMessage(){
-
     // --1-- Get message from input area.
     const input = document.getElementById("message-input");
     const message = input.value;
@@ -36,11 +35,11 @@ function refresh_users() {
         user_list.innerHTML = ''
         // -- c -- Reload the users.
         for(const elem of data){
-            const new_user = document.createElement('li');
+            const new_user = document.createElement('p');
             new_user.appendChild(document.createTextNode(`${elem.username}`));
+            new_user.className = "fas fa-user"
             user_list.appendChild(new_user);
         }
-
     }).catch(err => {
         console.warn(err);
     })
@@ -55,31 +54,23 @@ function refresh_users() {
 window.addEventListener('DOMContentLoaded', (event) => {
 
     client.connect({}, frame => {
-
-        // // --1--- Add username to connected users (/app/chat.new-user).
-        // const username_holder = document.getElementById("username-holder");
-        // const name = username_holder.innerText;
-        // client.send('/app/new-user', {}, JSON.stringify({username: name, type: 'CONNECT'}));
-
         // --2-- Subscribe to "/topic/messages".
         client.subscribe("/topic/messages", payload => {
             const json_obj = JSON.parse(payload.body)
             if(["CONNECT", "DISCONNECT"].includes(json_obj.type)){
-                refresh_users()
+                refresh_users();
             }
-
             const message_list = document.getElementById('message-list');
-            const message = document.createElement('li');
-            message.appendChild(document.createTextNode(`${json_obj.username}: ${json_obj.message}`));
-            message_list.appendChild(message);
-
+            const li = document.createElement('li');
+            li.appendChild(document.createTextNode(`${json_obj.username}: ${json_obj.message}`));
+            message_list.appendChild(li);
         });
     });
 });
 
 
-//Added feature - Message sent when Enter pressed
-//This has the downside that the user can not send multi-line messages unless copy pasted.
+// Added feature - Message sent when Enter pressed.
+// This has the downside that the user can not send multi-line messages unless copy pasted.
 window.addEventListener("keydown",
     function (e) {
     if (e.key === 'Enter') {

@@ -47,9 +47,15 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
                                    org.springframework.http.server.ServerHttpResponse serverHttpResponse,
                                    WebSocketHandler webSocketHandler, Map<String, Object> attributes) {
 
+
         String username = getUsernameFromSession(serverHttpRequest);
+        System.out.println("Handshake with: " + username);
         if (username != null){
             attributes.put("username", username);
+            //       If username not in DB redirect to adding user to DB (this occurs on refresh or direct entering).
+            if (userService.getUserByUsername(username).isEmpty()){
+                userService.addNewUser(username);
+            }
         }
             return true;
     }
@@ -57,6 +63,7 @@ public class HttpHandshakeInterceptor implements HandshakeInterceptor {
     @Override
     public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {
     }
+
     /**
      * Given a HttpRequest returns the username from the request session attributes.
      * @param serverHttpRequest - The Request to derive username from.

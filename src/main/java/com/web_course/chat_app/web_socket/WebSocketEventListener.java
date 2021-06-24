@@ -2,6 +2,7 @@ package com.web_course.chat_app.web_socket;
 
 import com.web_course.chat_app.api.message.Message;
 import com.web_course.chat_app.api.message.MessageType;
+import com.web_course.chat_app.api.user.UserController;
 import com.web_course.chat_app.api.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -48,9 +49,9 @@ public class WebSocketEventListener {
         final StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         final String username = (String) Objects.requireNonNull(accessor.getSessionAttributes()).get("username");
 
-        if(userService.getUserByUsername(username).isEmpty()) // this can happen if page refreshed.
-            userService.addNewUser(username);
-
+//        if(userService.getUserByUsername(username).isEmpty()) // this can happen if page refreshed.
+//            userService.addNewUser(username);
+        System.out.println("CONNECT with " + username);
         sendingOperations.convertAndSend("/topic/messages",
                 new Message("Joined the chat", username, MessageType.CONNECT));
     }
@@ -68,7 +69,6 @@ public class WebSocketEventListener {
         if(userService.getUserByUsername(username).isPresent())
             userService.deleteUser(username);
 
-        System.out.println("DISCONNECT EVENT " + username);
         sendingOperations.convertAndSend("/topic/messages",
                 new Message("Left the Chat.", username, MessageType.DISCONNECT));
 

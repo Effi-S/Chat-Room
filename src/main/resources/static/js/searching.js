@@ -1,4 +1,7 @@
-//Here lies the code relevant to searching functionalities in the chatroom.
+// Here lies the code relevant to searching functionalities in the chatroom.
+// The 2 searches are:
+//      1. Searching for messages containing a sun-string/word.
+//      2. Searching for messages by a particular user.
 
 //List Element with our search results.
 const search_list = document.getElementById("search-message-list")
@@ -18,7 +21,7 @@ function clear_search_list(){
 // Utility function for adding messages to search list
 function add_msg_lst_to_search(msg_lst) {
     if(msg_lst.length === 0){
-        msg_lst.values = [{'username': 'chat-app', 'message': 'Nothing found'}]
+        msg_lst.push({'username': 'chat-app', 'message': ' Nothing found :('})
     }
     for(const elem of msg_lst.values()){
         const li = document.createElement("li");

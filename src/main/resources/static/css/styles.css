@@ -7,9 +7,6 @@ h1 {
     font-family: sans-serif;
 }
 
-ul[style]{
-    list-style-type: none !important;
-}
 
 button{
     background-color: rgba(34, 29, 47, 1) !important;

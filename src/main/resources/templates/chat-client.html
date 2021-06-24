@@ -83,7 +83,7 @@
                       <div class="card-body">
                           <ul id="user-list">
                               <th:block th:each="user : ${users}">
-                                  <li th:text="${user.getUsername()}"></li>
+                                  <p th:text="${user.getUsername()}" class="fas fa-user"></p>
                               </th:block>
                           </ul>
                       </div>

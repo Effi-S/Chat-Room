@@ -3,7 +3,9 @@ package com.web_course.chat_app.api.user;
 import com.web_course.chat_app.exceptions.UserAlreadyRegisteredException;
 import com.web_course.chat_app.exceptions.UserNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -93,7 +95,6 @@ public class UserService {
         userRepository.deleteById(user.get().getId());
 
     }
-
     /**
      * Gets all of the users.
      *
@@ -103,15 +104,4 @@ public class UserService {
        return userRepository.findAll();
     }
 
-//    /**
-//     * Gets all of the usernames of the Users.
-//     *
-//     * @return List of All the usernames.
-//     */
-//    public List<String> getAllUsernames() {
-//
-//        List<String> usernames = new ArrayList<>();
-//        this.getAllUsers().forEach(user-> {usernames.add(user.getUsername());});
-//        return usernames;
-//    }
 }

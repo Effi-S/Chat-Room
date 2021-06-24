@@ -8,7 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 /**
@@ -55,10 +56,7 @@ public class PageController {
      */
     @RequestMapping("/chatroom")
     public String connectToChat(Model model,
-                                HttpServletRequest request){
-
-        System.out.println("session Id" + request.getSession().getId());
-        System.out.println(userService.getUserBySessionId(request.getSession().getId()).isPresent());
+                                HttpServletRequest request) throws IOException {
 
         // --1-- If username is empty (not in session) throw UserNotExistException
         String username = (String) request.getSession().getAttribute("username");

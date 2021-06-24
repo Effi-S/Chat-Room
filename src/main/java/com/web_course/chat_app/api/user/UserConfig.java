@@ -18,7 +18,8 @@ public class UserConfig {
      */
     @Bean
     CommandLineRunner userCommandLineRunner(UserRepository repository){
-        return args -> repository.save(new User("chat-app", "chat-app")
+        return args -> repository.save(new User("chat-app",
+                "chat-app-SESSION-Id-Dummy")
         );
     }
 }
