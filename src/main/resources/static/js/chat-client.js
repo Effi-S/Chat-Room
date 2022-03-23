@@ -39,8 +39,8 @@ function refresh_users() {
         user_list.innerHTML = ''
         // -- c -- Reload the users.
         for(const elem of data){
-            const new_user = document.createElement('p');
-            new_user.appendChild(document.createTextNode(`${elem.username}`));
+            const new_user = document.createElement('li');
+            new_user.appendChild(document.createTextNode(`${elem.username} `));
             new_user.className = "fas fa-user"
             user_list.appendChild(new_user);
         }

@@ -1,0 +1,6 @@
+com.web_course.chat_app
+com.web_course.chat_app.api.message
+com.web_course.chat_app.api.user
+com.web_course.chat_app.controllers
+com.web_course.chat_app.exceptions
+com.web_course.chat_app.web_socket

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Efrayim Sztokman">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <title>EX4 - Web course </title>
+  </head>
+  <body>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron">
+			
+				<h1>
+					<strong>Spring Web development Exercise 4.</strong><br/>
+					Chat Application with Spring MySQL & WebSocket.
+				</h1>
+				<h1>
+					<strong>README</strong>
+				</h1>
+				<h3>
+					<strong>Author</strong> - Efrayim Sztokman<br /><br />
+					<strong>Date:</strong> 24/06/2021<br /><strong>ID</strong> - 315704130
+				</h3>
+				<h3>
+					<strong>Email</strong> - <a href="mailto:Efrayimsz@edu.hac.ac.il">Efrayimsz@edu.hac.ac.il</a>
+				</h3>
+				<h2>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-4">
+							</div>
+							<div class="col-md-4">
+							</div>
+						</div>
+					</div>
+				</h2>
+				<p>
+					<a class="btn btn-primary btn-large" href="javadoc/index.html">See Javadoc</a>
+				</p>
+			</div>
+			<h2>
+				Program overview
+			</h2>
+			<p>
+			This is a simple chat app with a single chatroom.<br/>
+  			Websocket was used to connect all users to one chatroom.<br/>
+  			There are 2 Pages in this application: 1. Login Page 2. Chatroom Page.<br/>
+  			The user logs in in the login page and can chat with any other user logged on.
+			<br/>
+			<dl>
+				<dt>
+				This Application instantiates 2 Databases: 
+				</dt>
+				<dd>
+					1. User Database - for storing all connected users with their session ID's
+				</dd>
+				<dd>
+					2. Message Database 0 for storing all messages sent in the chat.
+				</dd>
+			</dl>
+			
+			
+			<dl>
+				<dt>
+				When the user logs in:
+				</dt>
+				<dd>
+					1. The username is passed to the API from the login form.
+				</dd>
+				<dd>
+					 2. The API triggers creating the User element in the User database.
+				</dd>
+				<dd>
+					3. The user is then redirected to the chatroom page.
+				</dd>
+				<dd>
+					4. When entering the chatroom the user subscribes to the websocket endpoint.<br/>
+					   Now when any message is sent the client reads and executes showing the message.
+				</dd>
+			</dl>
+
+			<dl>
+				<dt>
+					3 Exceptions can occur during runtime:
+				</dt>
+				<dd>
+					1. The user tries to log in but a user with the same name is logged in.
+				</dd>
+				<dd>
+					2. The user tries to access the chatroom before logging in
+				</dd>
+				<dd>
+					3. The user tries to log in while still connected to the chat in the same session.
+				</dd>
+				<dt>
+					In All three cases the user is redirected to the Login Page.<br/>
+					And the relevant error message is displayed on the top of the page using thyeme-leaf.
+				</dt>
+			</dl>
+		</div>
+	</div>
+	</div>
+	
+	
+	<hr />
+	<h1>
+		Code Structure
+	</h1>
+	<div class="row">
+		<div class="col-md-4">
+			<h2>
+				REST API 
+			</h2>
+			<p>
+			The api package is the REST API for connecting to each Database,
+			"user" and "message". <br/>
+			For the user Database there is the internal user package<br/> 
+			and for message there is the message package.<br/>
+			</p>
+			<p>
+				<a class="btn" href="#"></a>
+			</p>
+			<h3> message package</h3>
+			<dl>
+				<dt>
+					Message 
+				</dt>
+				<dd>
+					 Message holds all information about a message.<br/>
+					 Messages are stored in "message" table in DB.
+				</dd>
+				<dt>
+					MessageConfig
+				</dt>
+				<dd>
+					In this class we can instantiate our Massage DB.
+				</dd>
+				<dt>
+					MessageController
+				</dt>
+				<dd>
+					This acts as the endpoint to our Messages API.
+				</dd>
+				<dt>
+					MessageService
+				</dt>
+				<dd>
+					This is the Service Layer of  "message" DB.
+				</dd>
+				<dt>
+					MessageRepository
+				</dt>
+				<dd>
+					This is the repository layer for our message database.
+
+				</dd>
+				<dt>
+					MassageType
+				</dt>
+				<dd>
+					This is an Enum class for determining the type of message that was sent.<br />
+				 	Based on a messages type, the front end can decide how to react.	
+				</dd>
+
+			</dl>
+			<h3> user package</h3>
+			<dl>
+				<dt>
+					User 
+				</dt>
+				<dd>
+					 User holds all information about a User.<br/>
+					 Users are stored in "user" table in DB.
+				</dd>
+				<dt>
+					UserConfig
+				</dt>
+				<dd>
+					In this class we can instantiate our User DB.
+				</dd>
+				<dt>
+					UserController
+				</dt>
+				<dd>
+					This acts as the endpoint to our User API.
+				</dd>
+				<dt>
+					UserService
+				</dt>
+				<dd>
+					This is the Service Layer of  "user" DB.
+				</dd>
+				<dt>
+					UserRepository
+				</dt>
+				<dd>
+					This is the repository layer for our user database.
+				</dd>
+			</dl>
+		</div>
+		<div class="col-md-4">
+			<h2>
+				controllers Package
+			</h2>
+			<p> 
+				Here we hold our controllers that are not part of the REST API.
+			<p>
+				<a class="btn" href="#"></a>
+			</p>
+			<dl>
+				<dt>
+					PageController
+				</dt>
+				<dd>
+					This class controls HTTP Request mapping of our app.<br/>
+					This include: login, logout and chatroom.
+					</dd>
+				<dt>
+					ChatController
+				</dt>
+				<dd>
+					This Class is in charge of mapping messages sent by WebSocket.
+				</dd>
+			</dl>
+			<h3>
+				exception Package
+			</h3>
+			<p>
+				Here we store various Custom Runtime Exceptions.<br/>
+				As well, we have a Exception handler for these Exceptions.
+			</p>
+			<p>
+			<dl>
+				<br />
+				
+				<dt>
+					UserExceptionHandler
+				</dt>
+				<dd>
+					This ControllerAdvice is in charge of routing all User related exceptions.
+
+				</dd>
+				<dt>
+					UserAlreadyRegisteredException
+				</dt>
+				<dd>
+					Instantiates a new User already registered exception.
+   
+				</dd>
+				<dt>
+					UserNotExistException
+				</dt>
+				<dd>
+					nstantiates a new User not exist exception.
+				</dd>
+			</dl>
+		</div>
+		<div class="col-md-4">			
+			<h3>
+				web_socket 
+			</h3>
+			<p>
+				Here we hold all of the server side logic for instantiating our Websocket protocol. <br/ >
+			</p>
+			<p>
+			<dl>
+				<dt>
+					WebSocketConfig
+				</dt>
+				<dd>
+					This class configures our STOMP endpoints.<br/>
+					Connects to Event listeners and Handshake interceptors.
+					
+				</dd>
+				<dt>
+					WebSocketEventListener
+				</dt>
+				<dd>
+					This class Handles Websocket Events. <br/>
+					Custom Handles for CONNECT and DISCONNECT exist here.
+				</dd>
+								<dt>
+					HttpHandshakeInterceptor
+				</dt>
+				<dd>
+					<br/>
+					This class intercepts the WebSocket handshake.<br/>
+					Here session attributes are added to STOMP protocol.<br/>
+					As well, in the event of refreshing the page, we make sure the user is not removed from the database.
+				</dd>
+				<dt>
+					WebSocketAuthInterceptor
+				</dt>
+				<dd>
+					Web socket authentication interceptor. <br/>
+					This interceptor Class *can be* used to validate the messages being passed.<br/>
+					Unfortunately, no authentication was implemented in this project so this has no use to us.<br/>
+  				</dd>
+			</dl>			
+		</div>
+	</div>
+</div>
+<br/><br/><br/>
+<div class="row">
+
+	<div class="col-md-6">
+		<h4>
+			Thymeleaf design.
+		</h4>
+		<p>
+		1. default.html - All Thyemeleaf templates must derive their layouts from default.html<br/>
+		2. fragments.html Various fragments exist in fragments.html that can be used by multiple templates.
+		</p>
+		<p>
+	</div>
+	<div class="col-md-6">
+		<h4>
+			Thymleaf Templates
+		</h4>
+		<p>
+		1. chat-client.html - The chatroom. <br/>
+		2. login.html - The 
+		</p>
+		<p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<h4>
+			JavaScript 
+		</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<ul>
+			<li><strong>chat-client.js:.</strong><br/>
+				<p>
+				In this JS file we connect to the Websocket from th clients side.<br/>
+				And hold all of the client-side logic for sending and receiving messages using  
+				</p>
+			</li>
+			<li><strong>searching.js:.</strong><br/>
+				<pre>
+Here lies the code relevant to searching functionalities in the chatroom.
+The 2 searches are:
+	 1. Searching for messages containing a sub-string/word.
+	 1. Searching for messages by a particular user.
+			    </pre>
+			</li>
+		</ul>
+	</div>
+		<div class="col-md-6">
+		<h4>
+			CSS 
+		</h4>
+			css for all pages can be found in styels.css
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<h3>
+			UML
+			
+		</h3><img  src="javadoc\chat_app-proj.png" width="1600" height="452" />
+	</div>
+	<hr />
+	<h2>
+		
+	</h2>
+
+<hr />
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+  </body>
+</html>
