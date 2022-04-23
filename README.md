@@ -8,9 +8,35 @@ Websocket was used to connect all users to one chatroom.
 There are 2 Pages in this application: 1. Login Page 2. Chatroom Page.
 The user logs in in the login page and can chat with any other user logged on.
 
-##  This Application instantiates 2 Databases:
-1. User Database - for storing all connected users with their session ID's
-2. Message Database 0 for storing all messages sent in the chat.
+
+
+
+## Thymeleaf design.
+1. default.html - All Thyemeleaf templates must derive their layouts from default.html
+2. fragments.html Various fragments exist in fragments.html that can be used by multiple templates.
+
+## Thymleaf Templates
+1. chat-client.html - The chatroom.
+2. login.html - The
+
+## JavaScript
+#### chat-client.js:.
+In this JS file we connect to the Websocket from th clients side.
+And hold all of the client-side logic for sending and receiving messages using
+
+#### searching.js:.
+Here lies the code relevant to searching functionalities in the chatroom.
+The 2 searches are:
+1. Searching for messages containing a sub-string/word.
+2. Searching for messages by a particular user.
+			    
+## CSS
+css for all pages can be found in styels.css
+
+##  Databases:
+This Application instantiates a two tables in a MySQL Database.
+1. User table - for storing all connected users with their session ID's
+2. Message  table for storing all messages sent in the chat.
 ####  When the user logs in:
 1. The username is passed to the API from the login form.
 2. The API triggers creating the User element in the User database.
@@ -92,26 +118,3 @@ As well, in the event of refreshing the page, we make sure the user is not remov
 Web socket authentication interceptor.
 This interceptor Class *can be* used to validate the messages being passed.
 Unfortunately, no authentication was implemented in this project so this has no use to us.
-
-
-## Thymeleaf design.
-1. default.html - All Thyemeleaf templates must derive their layouts from default.html
-2. fragments.html Various fragments exist in fragments.html that can be used by multiple templates.
-
-## Thymleaf Templates
-1. chat-client.html - The chatroom.
-2. login.html - The
-
-## JavaScript
-#### chat-client.js:.
-In this JS file we connect to the Websocket from th clients side.
-And hold all of the client-side logic for sending and receiving messages using
-
-#### searching.js:.
-Here lies the code relevant to searching functionalities in the chatroom.
-The 2 searches are:
-1. Searching for messages containing a sub-string/word.
-2. Searching for messages by a particular user.
-			    
-## CSS
-css for all pages can be found in styels.css
