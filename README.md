@@ -2,6 +2,18 @@
  ###### Chat Application with Spring MySQL & WebSocket.
 ![image](https://user-images.githubusercontent.com/57197982/164945446-04d4c243-e761-411a-8922-af3ca73ebd69.png)
 
+## MySQL 
+This app connects to MySQL on port 3306 
+There are 2 ways to instantiate MySQL
+#### Option 1: manually
+See `application.properties` connection details 
+#### Option 2: Docker
+1. Make sure Docker daemon is running 
+2. 
+```cd mysql_docker
+. run.sh
+```
+
 ## Program overview
 This is a simple chat app with a single chatroom.
 Websocket was used to connect all users to one chatroom.
