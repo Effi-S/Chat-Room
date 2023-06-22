@@ -10,7 +10,8 @@ See `application.properties` connection details
 #### Option 2: Docker
 1. Make sure Docker daemon is running 
 2. 
-```cd mysql_docker
+```bash
+cd mysql_docker
 . run.sh
 ```
 
