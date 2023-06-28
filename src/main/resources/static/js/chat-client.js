@@ -74,10 +74,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
 // Added feature - Message sent when Enter pressed.
-// This has the downside that the user can not send multi-line messages unless copy pasted.
+// This alone, has the downside that it prevents multi-line messages.
+// To mitigate this - Shift + Enter will add a line.
 window.addEventListener("keydown",
     function (e) {
-    if (e.key === 'Enter') {
+    if (e.shiftKey && e.key === 'Enter'){
+        // "Enter" is processed normally
+    }
+    else if (e.key === 'Enter') {
         sendMessage()
     }
+
 });
